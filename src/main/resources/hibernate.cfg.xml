@@ -20,6 +20,8 @@
         <property name="format_sql">false</property>
 
         <mapping class="com.home.model.UserDetails"/>
+        <mapping class="com.home.model.Vehicle"/>
+        <mapping class="com.home.model.Credentials"/>
 
     </session-factory>
 </hibernate-configuration>

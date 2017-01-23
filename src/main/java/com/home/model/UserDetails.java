@@ -1,7 +1,11 @@
 package com.home.model;
 
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by Alex on 21.01.2017.
@@ -15,12 +19,15 @@ public class UserDetails {
     private Date joinedDate;
     private Address address;
     private Address officeAddress;
+    private Collection<Company> companies = new ArrayList<>();
     private String description;
+    private Vehicle vehicle;
+    private Collection<Credentials> credentials = new ArrayList<>();
 
     public UserDetails(){}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "USER_ID")
     public int getUserId() {
         return userId;
@@ -32,7 +39,7 @@ public class UserDetails {
 
     @Column (name = "USER_NAME")
     public String getUserName() {
-        return "Mr/Ms " + userName;
+        return userName;
     }
 
     public void setUserName(String userName) {
@@ -85,14 +92,51 @@ public class UserDetails {
         this.officeAddress = officeAddress;
     }
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_COMPANIES",
+        joinColumns = @JoinColumn(name = "USER_ID")
+    )
+//    @GenericGenerator(name = "sequence-gen", strategy = "sequence")
+//    @CollectionId(columns = {@Column(name = "COMPANY_ID")}, type = @Type(type = "long"), generator = "sequence-gen")
+    public Collection<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(Collection<Company> companies) {
+        this.companies = companies;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "VEHICLE_ID")
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    public Collection<Credentials> getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Collection<Credentials> credentials) {
+        this.credentials = credentials;
+    }
+
     @Override
     public String toString() {
         return "UserDetails{" +
                 "userId=" + userId +
                 ", userName='" + userName + '\'' +
                 ", joinedDate=" + joinedDate +
-                ", address='" + address + '\'' +
+                ", address=" + address +
+                ", officeAddress=" + officeAddress +
+                ", companies=" + companies +
                 ", description='" + description + '\'' +
+                ", vehicle=" + vehicle +
+                ", credentials=" + credentials +
                 '}';
     }
 }
