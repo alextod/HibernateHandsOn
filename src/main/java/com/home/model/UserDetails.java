@@ -116,7 +116,11 @@ public class UserDetails {
         this.vehicle = vehicle;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinTable is commented out due to mappedBy attribute in @OneToMany annotation
+//    @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"),
+//        inverseJoinColumns = @JoinColumn(name = "CRED_ID")
+//    )
     public Collection<Credentials> getCredentials() {
         return credentials;
     }

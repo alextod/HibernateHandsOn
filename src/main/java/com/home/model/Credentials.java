@@ -1,9 +1,6 @@
 package com.home.model;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by atodorov on 1/23/2017.
@@ -16,6 +13,9 @@ public class Credentials {
     private int credId;
     private String login;
     private String password;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private UserDetails user;
 
     public Credentials(){}
 
@@ -48,12 +48,21 @@ public class Credentials {
         this.password = password;
     }
 
+    public UserDetails getUser() {
+        return user;
+    }
+
+    public void setUser(UserDetails user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Credentials{" +
                 "credId=" + credId +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", user=" + user.getUserId() +
                 '}';
     }
 }

@@ -2,8 +2,6 @@ package com.home.repository;
 
 import com.home.model.*;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +15,7 @@ public class UserHibernateRepository {
     private static int userCount = 1;
 
     @Transactional
-    public UserDetails saveUserHibernate(){
+    public String saveUserHibernate(){
         UserDetails userDetails = new UserDetails();
         userDetails.setUserName("User " + userCount);
         userDetails.setJoinedDate(new Date());
@@ -37,8 +35,12 @@ public class UserHibernateRepository {
         Credentials credentials1 = new Credentials("login1", "password1");
         Credentials credentials2 = new Credentials("login2", "password2");
 
+        credentials1.setUser(userDetails);
+        credentials2.setUser(userDetails);
+
         userDetails.getCredentials().add(credentials1);
         userDetails.getCredentials().add(credentials2);
+
 
         try {
             Session session = HibernateSessionFactory.getSessionFactory().openSession();
@@ -50,22 +52,26 @@ public class UserHibernateRepository {
             System.out.println(e.getMessage());
         }
         userCount++;
-        return userDetails;
+        return userDetails.toString();
     }
 
     @Transactional
-    public UserDetails getUserHibernate() {
+    public String getUserHibernate() {
         UserDetails user = null;
+        Session session = null;
         try{
-            Session session = HibernateSessionFactory.getSessionFactory().openSession();
+            session = HibernateSessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
             user = session.get(UserDetails.class, 1);
-            //System.out.println(user.getCompanies());
-            session.close();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+        finally {
+            if(session != null) {
+                //session.close();
+            }
+        }
         System.out.println("User is - " + user);
-        return user;
+        return user.toString();
     }
 }

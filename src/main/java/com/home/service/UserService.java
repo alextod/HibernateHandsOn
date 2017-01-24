@@ -37,11 +37,11 @@ public class UserService {
         return getAllUsers();
     }
 
-    public UserDetails saveUserHibernate(){
+    public String saveUserHibernate(){
         return userHibernateRepository.saveUserHibernate();
     }
 
-    public UserDetails getUserHibernate() {
+    public String getUserHibernate() {
         return userHibernateRepository.getUserHibernate();
     }
 }

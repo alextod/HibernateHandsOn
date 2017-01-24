@@ -31,12 +31,12 @@ public class UserController {
 
 
     @RequestMapping(value = "/hibernate")
-    public UserDetails saveUserHibernate(){
+    public String saveUserHibernate(){
         return userService.saveUserHibernate();
     }
 
     @RequestMapping(value = "/hibernate/user1")
-    public UserDetails getUserHibernate(){
+    public String getUserHibernate(){
         return userService.getUserHibernate();
     }
 }
