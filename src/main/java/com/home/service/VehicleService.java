@@ -16,4 +16,8 @@ public class VehicleService {
     public Vehicle saveMockVehicle(){
         return vehicleHibernateRepository.saveMockVehicle();
     }
+
+    public String testInheritance(){
+        return vehicleHibernateRepository.testInheritance();
+    }
 }
