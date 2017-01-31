@@ -46,7 +46,7 @@ public class UserHibernateRepository {
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(userDetails);
+            session.persist(userDetails);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

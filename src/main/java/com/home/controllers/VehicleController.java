@@ -20,4 +20,9 @@ public class VehicleController {
     public Vehicle saveMockVehicle(){
         return vehicleService.saveMockVehicle();
     }
+
+    @RequestMapping(value = "/testInheritance")
+    public String testIheritance(){
+        return vehicleService.testInheritance();
+    }
 }

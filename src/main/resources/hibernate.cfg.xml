@@ -22,6 +22,9 @@
         <mapping class="com.home.model.UserDetails"/>
         <mapping class="com.home.model.Vehicle"/>
         <mapping class="com.home.model.Credentials"/>
+        <mapping class="com.home.model.TwoWheelerVehicle"/>
+        <mapping class="com.home.model.FourWheelerVehicle"/>
+
 
     </session-factory>
 </hibernate-configuration>

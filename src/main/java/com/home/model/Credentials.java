@@ -1,5 +1,8 @@
 package com.home.model;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 
 /**
@@ -14,6 +17,7 @@ public class Credentials {
     private String login;
     private String password;
     @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "USER_ID")
     private UserDetails user;
 
