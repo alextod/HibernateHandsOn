@@ -39,4 +39,14 @@ public class UserController {
     public String getUserHibernate(){
         return userService.getUserHibernate();
     }
+
+    @RequestMapping(value = "/hibernate/deleteUser1")
+    public String deleteUserHibernate(){
+        return userService.deleteUserHibernate();
+    }
+
+    @RequestMapping(value = "/hibernate/updateUser1")
+    public String updateUserSetNameTestUser(){
+        return userService.updateUserSetNameTestUser();
+    }
 }

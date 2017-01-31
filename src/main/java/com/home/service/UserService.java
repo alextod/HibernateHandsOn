@@ -44,4 +44,12 @@ public class UserService {
     public String getUserHibernate() {
         return userHibernateRepository.getUserHibernate();
     }
+
+    public String deleteUserHibernate(){
+        return userHibernateRepository.deleteUserHibernate();
+    }
+
+    public String updateUserSetNameTestUser(){
+        return userHibernateRepository.updateUserSetNameTestUser();
+    }
 }

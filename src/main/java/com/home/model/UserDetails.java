@@ -27,7 +27,7 @@ public class UserDetails {
     public UserDetails(){}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     public int getUserId() {
         return userId;

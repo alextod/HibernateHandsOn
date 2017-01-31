@@ -42,14 +42,19 @@ public class UserHibernateRepository {
         userDetails.getCredentials().add(credentials2);
 
 
+        Session session = null;
         try {
-            Session session = HibernateSessionFactory.getSessionFactory().openSession();
+            session = HibernateSessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(userDetails);
             session.getTransaction().commit();
-            session.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+        finally {
+            if(session != null) {
+                session.close();
+            }
         }
         userCount++;
         return userDetails.toString();
@@ -57,21 +62,74 @@ public class UserHibernateRepository {
 
     @Transactional
     public String getUserHibernate() {
-        UserDetails user = null;
+        UserDetails user;
         Session session = null;
+        String resultString = "Unable to retrieve user from database";
         try{
             session = HibernateSessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
             user = session.get(UserDetails.class, 1);
+            resultString = user.toString();
+            System.out.println("User is - " + user);
+            session.getTransaction().commit();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
         finally {
             if(session != null) {
-                //session.close();
+                session.close();
             }
         }
-        System.out.println("User is - " + user);
-        return user.toString();
+
+        return resultString;
+    }
+
+    @Transactional
+    public String deleteUserHibernate(){
+        UserDetails user;
+        Session session = null;
+        String resultString = "Unable to retrieve user from database";
+        try{
+            session = HibernateSessionFactory.getSessionFactory().openSession();
+            session.beginTransaction();
+            user = session.get(UserDetails.class, 1);
+            session.delete(user);
+            resultString = user.toString();
+            System.out.println("Deleted user is - " + user);
+            session.getTransaction().commit();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if(session != null) {
+                session.close();
+            }
+        }
+
+        return "Deleted user: \n" + resultString;
+    }
+
+    @Transactional
+    public String updateUserSetNameTestUser(){
+        UserDetails user;
+        Session session = null;
+        String resultString = "Unable to retrieve user from database";
+        try{
+            session = HibernateSessionFactory.getSessionFactory().openSession();
+            session.beginTransaction();
+            user = session.get(UserDetails.class, 1);
+            user.setUserName("Test User");
+            session.update(user);
+            resultString = user.toString();
+            System.out.println("Update user is - " + user);
+            session.getTransaction().commit();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        } finally {
+            if(session != null){
+                session.close();
+            }
+        }
+        return resultString;
     }
 }
